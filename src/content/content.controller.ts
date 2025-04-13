@@ -12,8 +12,8 @@ import {
 import { ContentService } from './content.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ContentType } from '@prisma/client';
-import { CreateContentDto } from './dto/create-content.dto';
-import { UpdateContentDto } from './dto/update-content.dto';
+import { CreateContentValidation } from './validations/content.validation';
+import { UpdateContentValidation } from './validations/content.validation';
 
 @Controller('content')
 export class ContentController {
@@ -21,8 +21,8 @@ export class ContentController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  create(@Body() createContentDto: CreateContentDto) {
-    return this.contentService.create(createContentDto);
+  create(@Body() createContentValidation: CreateContentValidation) {
+    return this.contentService.create(createContentValidation);
   }
 
   @Get()
@@ -62,8 +62,11 @@ export class ContentController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  update(@Param('id') id: string, @Body() updateContentDto: UpdateContentDto) {
-    return this.contentService.update(id, updateContentDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateContentValidation: UpdateContentValidation,
+  ) {
+    return this.contentService.update(id, updateContentValidation);
   }
 
   @Delete(':id')

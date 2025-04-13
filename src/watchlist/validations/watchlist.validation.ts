@@ -1,7 +1,7 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 
-export class CreateSubscriptionDto {
+export class CreateWatchlistValidation {
   @IsString()
   @IsNotEmpty()
-  planId: string;
+  contentId: string;
 }

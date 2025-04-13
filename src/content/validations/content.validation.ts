@@ -1,7 +1,7 @@
 import { IsString, IsNotEmpty, IsEnum, IsOptional } from 'class-validator';
 import { ContentType } from '@prisma/client';
 
-export class CreateContentDto {
+export class CreateContentValidation {
   @IsString()
   @IsNotEmpty()
   title: string;
@@ -17,4 +17,22 @@ export class CreateContentDto {
   @IsString()
   @IsNotEmpty()
   categoryId: string;
+}
+
+export class UpdateContentValidation {
+  @IsString()
+  @IsOptional()
+  title?: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @IsEnum(ContentType)
+  @IsOptional()
+  type?: ContentType;
+
+  @IsString()
+  @IsOptional()
+  categoryId?: string;
 }

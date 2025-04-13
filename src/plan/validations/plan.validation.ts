@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsNumber, IsArray } from 'class-validator';
 
-export class CreatePlanDto {
+export class CreatePlanValidation {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -11,7 +11,7 @@ export class CreatePlanDto {
 
   @IsNumber()
   @IsNotEmpty()
-  duration: number; // Ay cinsinden süre
+  duration: number;
 
   @IsArray()
   @IsString({ each: true })

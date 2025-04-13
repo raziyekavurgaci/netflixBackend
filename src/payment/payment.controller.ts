@@ -9,7 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
-import { CreatePaymentDto } from './dto/create-payment.dto';
+import { CreatePaymentValidation } from './validations/payment.validation';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Request } from 'express';
 import { PaymentStatus } from '@prisma/client';
@@ -28,9 +28,9 @@ export class PaymentController {
   @UseGuards(JwtAuthGuard)
   create(
     @Req() req: RequestWithUser,
-    @Body() createPaymentDto: CreatePaymentDto,
+    @Body() createPaymentValidation: CreatePaymentValidation,
   ) {
-    return this.paymentService.create(req.user.id, createPaymentDto);
+    return this.paymentService.create(req.user.id, createPaymentValidation);
   }
 
   @Get()

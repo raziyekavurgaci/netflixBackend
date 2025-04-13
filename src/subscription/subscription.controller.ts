@@ -9,8 +9,8 @@ import {
   Req,
 } from '@nestjs/common';
 import { SubscriptionService } from './subscription.service';
-import { CreatePlanDto } from './dto/create-plan.dto';
-import { CreateSubscriptionDto } from './dto/create-subscription.dto';
+import { CreatePlanValidation } from './validations/subscription.validation';
+import { CreateSubscriptionValidation } from './validations/subscription.validation';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Request } from 'express';
 
@@ -25,8 +25,8 @@ export class SubscriptionController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
   @Post('plan')
-  createPlan(@Body() createPlanDto: CreatePlanDto) {
-    return this.subscriptionService.createPlan(createPlanDto);
+  createPlan(@Body() createPlanValidation: CreatePlanValidation) {
+    return this.subscriptionService.createPlan(createPlanValidation);
   }
 
   @Get('plan')
@@ -43,11 +43,11 @@ export class SubscriptionController {
   @UseGuards(JwtAuthGuard)
   createSubscription(
     @Req() req: RequestWithUser,
-    @Body() createSubscriptionDto: CreateSubscriptionDto,
+    @Body() createSubscriptionValidation: CreateSubscriptionValidation,
   ) {
     return this.subscriptionService.createSubscription(
       req.user.id,
-      createSubscriptionDto,
+      createSubscriptionValidation,
     );
   }
 

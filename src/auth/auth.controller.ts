@@ -1,8 +1,10 @@
 import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
+import {
+  LoginValidation,
+  RegisterValidation,
+} from './validations/auth.validation';
 import { User } from './types/user.type';
 
 @Controller('auth')
@@ -11,10 +13,10 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  async login(@Body() loginDto: LoginDto) {
+  async login(@Body() loginValidation: LoginValidation) {
     const user = await this.authService.validateUser(
-      loginDto.email,
-      loginDto.password,
+      loginValidation.email,
+      loginValidation.password,
     );
 
     if (!user) {
@@ -27,12 +29,12 @@ export class AuthController {
   @Public()
   @Post('register')
   async register(
-    @Body() registerDto: RegisterDto,
+    @Body() registerValidation: RegisterValidation,
   ): Promise<Omit<User, 'password'>> {
     return this.authService.register(
-      registerDto.email,
-      registerDto.password,
-      registerDto.name,
+      registerValidation.email,
+      registerValidation.password,
+      registerValidation.name,
     );
   }
 }

@@ -9,7 +9,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { WatchlistService } from './watchlist.service';
-import { CreateWatchlistDto } from './dto/create-watchlist.dto';
+import { CreateWatchlistValidation } from './validations/watchlist.validation';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Request } from 'express';
 import { User } from '../auth/types/user.type';
@@ -20,9 +20,12 @@ export class WatchlistController {
   constructor(private readonly watchlistService: WatchlistService) {}
 
   @Post()
-  create(@Req() req: Request, @Body() createWatchlistDto: CreateWatchlistDto) {
+  create(
+    @Req() req: Request,
+    @Body() createWatchlistValidation: CreateWatchlistValidation,
+  ) {
     const user = req.user as User;
-    return this.watchlistService.create(user.id, createWatchlistDto);
+    return this.watchlistService.create(user.id, createWatchlistValidation);
   }
 
   @Get()
